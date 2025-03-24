@@ -1,5 +1,8 @@
 package edu.guilford;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.Scanner;
 
 public class ExceptionSandbox {
@@ -31,6 +34,40 @@ public class ExceptionSandbox {
         } while (!valid);
         System.out.println("The valid number entered is: " + n);
 
+        Scanner scanFile = null; // Scanner object to read the file
+        String dataLocation = null; // The file name given by the user
+        boolean validDataFile = false;
+        boolean validData = false;
+        double[][] data = null;
+
+        try {
+            System.out.println("Enter the name of the data file: ");
+            dataLocation = scan.next();
+            String dataPlace = "target/classes/" + dataLocation; // Path to the file
+
+            // Use a FileReader object to open the file for reading
+            // A reader reads characters rather than bits and bytes
+            FileReader dataFile = new FileReader(dataPlace);
+            BufferedReader dataBuffer = new BufferedReader(dataFile);
+            double[][] inputValues = null;
+
+            int i = 0;
+            int j = 0;
+
+            int rows = scan.nextInt();
+            int columns = scan.nextInt();
+            inputValues = new double[rows][columns];
+            for (i = 0; i < rows; i++) {
+                for (j = 0; j < columns; j++) {
+                    inputValues[i][j] = scan.nextDouble();
+                }
+            }
+
+        } catch (FileNotFoundException e) {
+            System.err.println("File not found: " + dataLocation);
+            System.err.flush();
+            System.exit(1); // Exit the program with an error code
+        }
 
     }
 }
